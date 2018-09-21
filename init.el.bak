@@ -9,13 +9,14 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 
+
 ;;管理、更新、使用自已所用的Packages
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   )
-(require 'cl)			 
+(require 'cl)
 ;;add whatever packages you want here
 (defvar lfy/packages '(
 		       company         ;;自动智能补全包
@@ -24,20 +25,22 @@
 		       smex            ;;按 M-x 后 显示提示
 		       swiper          ;;按 C-s 后(搜索) 下面单独开个窗口给提示
 		       counsel         ;;???
-		       smartparens     ;;智能成对匹配“” () [] {} 
+		       smartparens     ;;智能成对匹配“” () [] {}
 		       js2-mode
 		       nodejs-repl
 		       exec-path-from-shell
 		       popwin          ;;when require ,wh(setq company-minimum prefix-length 1) not require
-		       web-mode        ;; web-mode 则是一个非常常用很强大的用于编辑前端代码的 Major Mode,使用 M-;  
+		       web-mode        ;; web-mode 则是一个非常常用很强大的用于编辑前端代码的 Major Mode,使用 M-;
 		                        ;;就可以注释当前行代码或选中行的代码。
 		       expand-region   ;; 扩展选中区域
+
 		       iedit
 		       org-pomodoro    ;;Org-pomodoro 是一个番茄时间工作法的插件。
 		       helm-ag
-		       ;;Org-octopress 
+		       helm-swoop
+		       magit
+		       mwe-log-commands
 
-		       
 		       ) "default packages")
 (setq package-selected-packages lfy/packages)
 
@@ -56,11 +59,44 @@
 (menu-bar-mode t) ;;菜单栏显示
 (electric-indent-mode t) ;;自动缩进
 (setq inhibit-splash-screen t) ;; 抑制启动显示屏幕
-(global-linum-mode t) ;; 显示行号
 (scroll-bar-mode -1)
 
+;;显示行号与列号
+(global-linum-mode 1)
+(column-number-mode 1)
+
+;;自定义buffer头
+;;显示更多的buffer标题信息
+(setq frame-title-format
+      '("" " LFY ☺ "
+        (:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name)) "%b"))))
+
+;;保存时自动清除行尾空格及文件结尾空行
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;;tab&空格
+(setq indent-tabs-mode nil)
+(setq default-tab-width 4)
+(setq tab-width 4)
+
+;;开启行号
+;; (global-linum-mode t)
+(setq linum-format " %d ")
+;; (add-hook 'org-mode-hook (lambda () (linum-mode 0)));;关闭org-mode的行号
+
+;;常用 C-a C-e C-d C-w 光标至 头 尾 向前删除 向后删除
+(global-set-key (kbd "C-w") 'backward-kill-word)
+
+;;逗号后自动加空格
+(global-set-key (kbd ",")
+                #'(lambda ()
+                    (interactive)
+                    (insert ", ")))
+
+
 ;;;; 快速打开配置文件
-;;启动后自动进入*scartch* buffer中，按 F5 后自动打开init.el文件并按init.el配置
+;;启动后自动进入*scartch* buffer中，按 F5 后快速打开init.el文件，并按init.el配置
 (defun open-my-init-file()
 (interactive)
 (find-file "~/.emacs.d/init.el"))
@@ -68,14 +104,14 @@
 
 (global-company-mode t) ;;自动补全
 
-;; 1.make cursor style to bar (setq设置的变量， 当前BUffer有效，setq-default 设置全局变量） 
+;; 1.make cursor style to bar (setq设置的变量， 当前BUffer有效，setq-default 设置全局变量）
 (setq-default cursor-type 'bar) ;;改变光标样式（默认为一黑块状）
 ;; 2.Disable backup file
-;;禁止备份文件 
+;;禁止备份文件
 (setq make-backup-files nil)
 
 
-;; 3.Enable recentf-mode 
+;; 3.Enable recentf-mode
 (require 'recentf)
 (recentf-mode t)
 (setq recentf-max-menu-items 25)
@@ -103,7 +139,7 @@
 
 ;;装载hungry-delete(一种高效删除模式)
 (require 'hungry-delete)
-(global-hungry-delete-mode)                                   
+(global-hungry-delete-mode)
 
 ;;Config for smex
 (require 'smex) ; Not needed if you use package.el
@@ -123,7 +159,7 @@
 ;;(global-set-key (kbd "C-h f") 'counsel-describe-function)
 ;;(global-set-key (kbd "C-h v") 'counsel-describe-variable)
 
-;;自动匹配() "" [] {}等，成对出现 
+;;自动匹配() "" [] {}等，成对出现
 (require 'smartparens-config)
 ;;(add-hook 'emacs-lisp-mode-hook 'smartparens-mode);;指定某一种模式下使用smartparens
 (smartparens-global-mode t)  ;;每种模式下均可使用smartparens
@@ -134,7 +170,8 @@
 	(t (save-excursion
 	     (ignore-errors (backward-up-list))
 	     (funcall fn)))))
-;;在 Emacs Lisp 中我们 有时候只需要一个 ' 但是 Emacs 很好心的帮我们做了补全，但这并不是我们需要的。我 们可以通过下面的代码来让使 Emacs Lisp 在 Emacs ;;中的编辑变得更方便.
+;;在 Emacs Lisp 中我们 有时候只需要一个 ' 但是 Emacs 很好心的帮我们做了补全''，但这并不是我们需要的。
+;;我们可以通过下面的代码来让使 Emacs Lisp 在 Emacs中的编辑变得更方便.
 (sp-local-pair '(emacs-lisp-mode lisp-interaction-mode) "'" nil :actions nil)
 
 ;;实战 配置js2-mode and start to write javascript
@@ -174,6 +211,7 @@
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/Lfy_Study/org/gtd.org" "工作安排")
 	 "* TODO [#B] %?\n  %i\n"
+
 	 :empty-lines 1)))
 ;;绑定一个快捷键，r aka Remember
 (global-set-key (kbd "C-c r") 'org-capture)
@@ -276,12 +314,12 @@
 ;; 在 Company-mode 中，默认使用M-n M-p来上下移动光标选择，下面设置后，用 C-n 与 C-p 来移动选择补全项
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "M-n") nil) ;;禁用M-n
-  (define-key company-active-map (kbd "M-p") nil) ;;禁用M-p 
+  (define-key company-active-map (kbd "M-p") nil) ;;禁用M-p
   (define-key company-active-map (kbd "C-n") #'company-select-next)
   (define-key company-active-map (kbd "C-p") #'company-select-previous))
 
 ;; use aspell as ispell backend
-;;;; use American English as ispell default dictionary  
+;;;; use American English as ispell default dictionary
 (setq-default ispell-program-name "D:/msys64/usr/bin/aspell.exe")
 (ispell-change-dictionary "american" t)
 (setq text-mode-hook '(lambda() (flyspell-mode t) ))
@@ -295,11 +333,13 @@
 (setq save-abbrevs nil)
 (define-abbrev-table 'global-abbrev-table '(
 					    ;; Shifu
-					    ("lfy-" "LiFuYue") ("bhf-" "BianHaiFeng")
+					    ("lf" "LiFu")
+					    ;;yu
+					    ("bh" "BianHai")
 					    ;; My
-					    ("ept-" "ept_lfy@163.com")
+					    ("ept-" " @163.com")
                                             ;;gongyony
-					    ("syzx-" "syzxgl@163.com")
+					    ("syzx-" " @163.com")
 					   ))
 
 
@@ -313,7 +353,7 @@
 (require 'helm-ag)
 (global-set-key (kbd "C-c p s") 'helm-do-ag-project-root)
 
-(load-file "D:/Emacs/.emacs.d/elpa/org-octopress/org-octopress.el")
+
 ;;(require 'org-octopress)
 ;;(setq org-octopress-directory-top       "~/Lfy_Study/octopress/source")
 ;;(setq org-octopress-directory-posts     "~/Lfy_Study/octopress/source/_posts")
@@ -321,6 +361,8 @@
 ;;(setq org-octopress-directory-org-posts "~/Lfy_Study/octopress/source/blog")
 ;;(setq org-octopress-setup-file          "~/Lfy_Study/setupfile.org")
 
+;;查看git状态，在init.el中添加快捷键绑定
+(global-set-key (kbd "C-x g") 'magit-status)
 
 
 
