@@ -493,12 +493,22 @@
 (setq window-numbering-assign-func
       (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
 
+
+;; 不安装任何插件，使用emacs 格式化（整理）源程序，
+;; 1、如果想要整理整个文件
+;; M-x mark-whole-buffer  或者 C-x h  选中整个文件
+;; M-x indent-region      或者 C-M-\  格式化选中
+;; 2、只是整理某个函数
+;; M-x mark-defun       或者 C-M-h  选中函数
+;; M-x indent-region    或者 C-M-\  格式化
+
+;;安装插件Editorconfig后
 ;;将代码格式化，设置快捷键 F6
 (require 'editorconfig)
 (editorconfig-mode 1)
 (global-set-key (kbd "<f6>") 'editorconfig-format-buffer)
 
-
+(setq mark-holidays-in-calendar t)
 
 
 (custom-set-variables
