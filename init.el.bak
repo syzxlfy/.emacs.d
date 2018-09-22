@@ -33,15 +33,15 @@
 		       web-mode        ;; web-mode 则是一个非常常用很强大的用于编辑前端代码的 Major Mode,使用 M-;
 		                        ;;就可以注释当前行代码或选中行的代码。
 		       expand-region   ;; 扩展选中区域
-
-		       iedit
+                       iedit
 		       org-pomodoro    ;;Org-pomodoro 是一个番茄时间工作法的插件。
 		       helm-ag
 		       helm-swoop
 		       magit
-		       mwe-log-commands
+		       window-numbering	;窗口间切换 M-0 1 2 ...
 
-		       ) "default packages")
+		      ) "default packages")
+
 (setq package-selected-packages lfy/packages)
 
 (defun lfy/packages-installed-p()
@@ -85,8 +85,8 @@
 (setq linum-format " %d ")
 ;; (add-hook 'org-mode-hook (lambda () (linum-mode 0)));;关闭org-mode的行号
 
-;;常用 C-a C-e C-d C-w 光标至 头 尾 向前删除 向后删除
-(global-set-key (kbd "C-w") 'backward-kill-word)
+;;常用 C-a C-e C-d C-w 光标至 头 尾 向前删除 向后删除, 后面设置了更高效的C-w
+;; (global-set-key (kbd "C-w") 'backward-kill-word)
 
 ;;逗号后自动加空格
 (global-set-key (kbd ",")
@@ -207,14 +207,20 @@
 ;;         C-c C-d set deadline of items
 (global-set-key (kbd "C-c a") 'org-agenda)
 
-;;配置代码来设置一个模板（其中设置了待办事项的优先级还有触发键），可以实现快速记笔记
-(setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/Lfy_Study/org/gtd.org" "工作安排")
-	 "* TODO [#B] %?\n  %i\n"
 
-	 :empty-lines 1)))
+
+;; ;;配置代码来设置一个模板（其中设置了待办事项的优先级还有触发键），可以实现快速记笔记
+ (setq org-capture-templates
+       '(("t" "Todo" entry (file+headline "~/Lfy_Study/org" "工作安排"
+ 	"* TODO [#B] %?\n  %i\n"
+ 	 :empty-lines 1)
+))
 ;;绑定一个快捷键，r aka Remember
 (global-set-key (kbd "C-c r") 'org-capture)
+
+
+
+
 ;;Org-pomodoro 是一个番茄时间工作法的插件（更多关于这个工作法的信息可以在这里找到）。 它的 GitHub 地址在这里。在 (require 'org-pomodoro) 后可以通过 ;;Customize-group 来对其进行设置，包括不同休息种类的时长。
 (require 'org-pomodoro)
 (setq pomodoro-break-time 2)
@@ -223,8 +229,6 @@
 (setq-default mode-line-format
               (cons '(pomodoro-mode-line-string pomodoro-mode-line-string)
                     mode-line-format))
-;;(pomodoro-add-to-mode-line)
-
 
 
 ;;Emacs 自带的 HTML Mode 使用起来并不是那么的方便，而 web-mode 则是一个非常常用也 很强大的用于编辑前端代码的 Major ;;Mode（你可以在这里找到更多关于它的信息）。首先我们需要安装它，照例我们需要将其添加至我们的插件列表中去。(Web-mode)前面已安装
@@ -342,8 +346,6 @@
 					    ("syzx-" " @163.com")
 					   ))
 
-
-
 ;;ag它是非常快速的命令 行搜索工具，它是 Linux 的所有搜索工具中最快的。使用 ag 前我们需要进行安装，
 ;;# Windows 下通过 msys2 安装（确保在 path 中）
 ;;pacman -S mingw-w64-i686-ag # 32 位电脑
@@ -352,7 +354,6 @@
 ;;下面配置未成功
 (require 'helm-ag)
 (global-set-key (kbd "C-c p s") 'helm-do-ag-project-root)
-
 
 ;;(require 'org-octopress)
 ;;(setq org-octopress-directory-top       "~/Lfy_Study/octopress/source")
@@ -365,6 +366,68 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 
 
+;; 几个实用操作
+;; 1、 在行末或行中位置删除整行 ;;在emacs默认设置中，要想删除整行，需要先C-a跳到行首，然后使用C-k来删除整行，有些不方便。
+;;通过一下配置，可以使用C-w来删除整行（操作时不用事先选中整行）.
+;;同时不影响原有的剪切功能。M-w也可以在不事先选中整行的情况下复制整行。
+(defadvice kill-ring-save (before slickcopy activate compile)
+  (interactive
+   (if mark-active (list (region-beginning) (region-end))
+     (list (line-beginning-position)
+           (line-beginning-position 2)))))
+(defadvice kill-region (before slickcut activate compile)
+  (interactive
+   (if mark-active (list (region-beginning) (region-end))
+     (list (line-beginning-position)
+           (line-beginning-position 2)))))
+
+;; 2、优化注释功能
+;;Emacs的默认设置中，M-;可以起到注释的作用，但是有不方便的地方：必须在选中一部分区域后才能进行注释。
+;;通过如下配置，可以达到以下效果：当光标位于行尾时，M-;在行尾进行注释；当光标位于其他位置时，M-;起到注释该行的作用；
+;;当选中一部分区域时，M-;起到注释该区域的作用。
+(defun qiang-comment-dwim-line (&optional arg)
+  (interactive "*P")
+  (comment-normalize-vars)
+  (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+      (comment-or-uncomment-region (line-beginning-position) (line-end-position))
+    (comment-dwim arg)))
+(global-set-key "\M-;" 'qiang-comment-dwim-line)
+
+;; 3、设置透明效果
+;; 我觉得这个很有用，特别是需要一边写代码一边看参照其他文档时。按F12键可以一键切换透明度，非常方便
+;;set transparent effect
+(global-set-key [(f12)] 'loop-alpha)
+(setq alpha-list '((100 100) (95 65) (85 55) (75 45) (65 35)))
+(defun loop-alpha ()
+  (interactive)
+  (let ((h (car alpha-list)))                ;; head value will set to
+    ((lambda (a ab)
+       (set-frame-parameter (selected-frame) 'alpha (list a ab))
+       (add-to-list 'default-frame-alist (cons 'alpha (list a ab)))
+       ) (car h) (car (cdr h)))
+    (setq alpha-list (cdr (append alpha-list (list h))))
+    )
+  )
+;; 将子窗口自动编号,然后按 M-0…9跳转(最爱),  安装window-numbering.el,然后在.emacs中添加以下代码.
+;; 在emacs的默认设置中，需要使用C-x, o来进行窗口切换，颇为不便，特别是窗口数量比较大的时候。通过以下设置，可以
+;; 使用M-1/M-2/M-3/.../M-9来快速切换到第1/2/3/.../9窗口（窗口上有编号）。
+;; C-x 0：关闭当前窗口
+;; C-x 1：关闭当前窗口以为的其他窗口
+;; C-x 2：水平分割窗口
+;; C-x 3：垂直分割窗口
+;; C-x 4 0：关闭当前窗口和缓冲
+;; C-x 4 b：在另一窗口打开缓冲（如果当前只有一个窗口将分割一个新窗口）
+;; C-x 4 f：在另一窗口打开文件（…同上）
+;; C-x o：在多个窗口中循环切换
+(require 'window-numbering)
+(window-numbering-mode 1)
+;; If you want to affect the numbers, use window-numbering-before-hook or window-numbering-assign-func.
+;; For instance, to always assign the calculator window the number 9, add the following to your .emacs:
+(setq window-numbering-assign-func
+      (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
+
+
+
 
 
 
@@ -375,6 +438,7 @@
  ;; If there is more than one, they won't work right.
  '(company-idle-delay 0.08)
  '(company-minimum-prefix-length 1)
+ '(org-agenda-files nil)
  '(org-pomodoro-length 50))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
