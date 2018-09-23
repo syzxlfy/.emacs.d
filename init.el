@@ -30,7 +30,7 @@
 		       exec-path-from-shell
 		       popwin          ;;when require ,wh(setq company-minimum prefix-length 1) not require
 		       web-mode        ;; web-mode 则是一个非常常用很强大的用于编辑前端代码的 Major Mode,使用 M-;
-		                        ;;就可以注释当前行代码或选中行的代码。
+		       ;;就可以注释当前行代码或选中行的代码。
 		       expand-region   ;; 扩展选中区域
                        iedit
 		       org-pomodoro    ;;Org-pomodoro 是一个番茄时间工作法的插件。
