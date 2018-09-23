@@ -494,7 +494,7 @@
       (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
 
 
-;; 不安装任何插件，使用emacs 格式化（整理）源程序，
+;; 不安装任何插件，使用emacs格式化（整理）源程序，
 ;; 1、如果想要整理整个文件
 ;; M-x mark-whole-buffer  或者 C-x h  选中整个文件
 ;; M-x indent-region      或者 C-M-\  格式化选中
@@ -508,7 +508,8 @@
 (editorconfig-mode 1)
 (global-set-key (kbd "<f6>") 'editorconfig-format-buffer)
 
-(setq mark-holidays-in-calendar t)
+ ;;让 Emacs 可以直接打开和显示图片。
+ (setq auto-image-file-mode t)
 
 
 (custom-set-variables

@@ -1,0 +1,16 @@
+;; Emacs-W3 HTTP cookies file
+;; Automatically generated file!!! DO NOT EDIT!!!
+
+(setq url-cookie-storage
+ '((".yuedu.163.com"
+  [url-cookie "YUEDU_V_DID" "1537658586638271" "Fri, 11-Oct-2086 02:37:13 GMT" "/" ".yuedu.163.com" nil])
+ (".adobe.com"
+  [url-cookie "SETTINGS.LOCALE" "en%5Fus" "Mon, 14-Sep-2048 23:22:22 GMT" "/cfusion/" ".adobe.com" nil]))
+)
+(setq url-cookie-secure-storage
+ 'nil)
+
+;; Local Variables:
+;; version-control: never
+;; no-byte-compile: t
+;; End:
