@@ -93,9 +93,9 @@
 ;; (global-set-key (kbd "C-w") 'backward-kill-word)
 
 ;;逗号后自动加空格
-(global-set-key (kbd ",")
-                #'(lambda ()
-                    (insert ", ")))
+;; (global-set-key (kbd ",")
+;;                 #'(lambda ()
+;;                     (insert ", ")))
 
 ;;;; 快速打开配置文件
 ;;启动后自动进入*scartch* buffer中，按 F5 后快速打开init.el文件，并按init.el配置
@@ -154,7 +154,7 @@
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 ;;(global-set-key (kbd "M-x") 'counsel-M-x)
-;;(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+;; (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 ;;(global-set-key (kbd "C-h f") 'counsel-describe-function)
 ;;(global-set-key (kbd "C-h v") 'counsel-describe-variable)
 
@@ -277,8 +277,8 @@
         ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
         ("b" "Blog" tags-todo "BLOG")
         ("p" . "项目安排")
-        ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"cocos2d-x\"")
-        ("pl" tags-todo "PROJECT+DREAM+CATEGORY=\"LFY\"")
+        ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"Workspace\"")
+        ("pl" tags-todo "PROJECT+DREAM+CATEGORY=\"LFYNOTE\"")
         ("W" "Weekly Review"
          ((stuck "") ;; review stuck projects as designated by org-stuck-projects
           (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)

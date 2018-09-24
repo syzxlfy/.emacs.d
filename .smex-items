@@ -1,0 +1,46 @@
+
+;; ----- smex-history -----
+(
+ hippie-expand
+ edit-picture
+ delete-duplicate-lines
+ package-autoremove
+ helm-do-ag-project-root
+ company-ispell
+ eww
+)
+
+;; ----- smex-data -----
+(
+ (package-list-packages . 1)
+ (nodejs-repl . 13)
+ (package-autoremove . 5)
+ (nodejs-repl-send-buffer . 1)
+ (find-function-on-key . 1)
+ (info . 1)
+ (org-mode . 1)
+ (lisp-interaction-mode . 1)
+ (company-ispell . 3)
+ (org-capture . 1)
+ (customize-group . 2)
+ (org-pomodoro . 4)
+ (helm-ag . 1)
+ (helm-do-ag-project-root . 3)
+ (helm-swoop . 1)
+ (dired . 6)
+ (magit-clone . 1)
+ (magit-commit . 2)
+ (magit-push . 2)
+ (magit-status . 4)
+ (magit-init . 1)
+ (magit-log-all . 5)
+ (editorconfig-mode . 1)
+ (editorconfig-format-buffer . 1)
+ (editorconfig-display-current-properties . 1)
+ (editorconfig-find-current-editorconfig . 1)
+ (editorconfig-apply . 1)
+ (eww . 1)
+ (delete-duplicate-lines . 5)
+ (edit-picture . 1)
+ (hippie-expand . 1)
+)
