@@ -419,6 +419,24 @@
 					    ("syzx-" " @163.com")
 					    ))
 
+;; Hippie 补全
+;; Company 有时候补全功能并不是非常理想，这时就可以使用 Hippie Expand 来完成补全。 Company Mode 补全效果不理想的原因是在不同的区域中会使用不同的后端函数来完成补全， 但是当后端补全函数不能被激活时，则补全就不会被激活。
+;; 我们可以将下面的代码加入到我们的配置文件中，来增强 Hippie Expand 的功能，然后将其绑定为快捷键，使我们可以更方便的使用它。
+
+(setq hippie-expand-try-function-list '(try-expand-debbrev
+                                        try-expand-debbrev-all-buffers
+                                        try-expand-debbrev-from-kill
+                                        try-complete-file-name-partially
+                                        try-complete-file-name
+                                        try-expand-all-abbrevs
+                                        try-expand-list
+                                        try-expand-line
+                                        try-complete-lisp-symbol-partially
+                                        try-complete-lisp-symbol))
+(global-set-key (kbd "<f8>") 'hippie-expand)
+
+
+
 ;;ag它是非常快速的命令 行搜索工具，它是 Linux 的所有搜索工具中最快的。使用 ag 前我们需要进行安装，
 ;;# Windows 下通过 msys2 安装（确保在 path 中）
 ;;pacman -S mingw-w64-i686-ag # 32 位电脑
@@ -552,8 +570,9 @@
 ;; (global-set-key (kbd "C-=") 'er/expand-region)
 ;; (global-set-key (kbd "M-s e") 'iedit-mode)
 ;; (global-set-key (kbd "C-c p s") 'helm-do-ag-project-root)
+;; (global-set-key (kbd "<f6>") 'editorconfig-format-buffer)
 ;; (global-set-key (kbd "<f7>") 'helm-do-ag-project-root)
+;; (global-set-key (kbd "<f8>") 'hippie-expand)
 ;; (global-set-key (kbd "C-x g") 'magit-status)
 ;; (global-set-key "\M-;" 'qiang-comment-dwim-line)
 ;; (global-set-key [(f12)] 'loop-alpha)
-;; (global-set-key (kbd "<f6>") 'editorconfig-format-buffer)
