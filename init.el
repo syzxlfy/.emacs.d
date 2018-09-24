@@ -65,9 +65,14 @@
 (setq inhibit-splash-screen t) ;; 抑制启动显示屏幕
 (scroll-bar-mode -1)
 
+;; (when (version<= "26.0.50" emacs-version )
+;;   (global-display-line-numbers-mode))
 ;;显示行号与列号
 (global-linum-mode 1)
 (column-number-mode 1)
+(setq linum-format " %d ")
+;;关闭org-mode的行号
+;; (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
 
 ;;自定义buffer头
 ;;显示更多的buffer标题信息
@@ -83,9 +88,6 @@
 (setq indent-tabs-mode nil)
 (setq default-tab-width 4)
 (setq tab-width 4)
-
-(setq linum-format " %d ")
-;; (add-hook 'org-mode-hook (lambda () (linum-mode 0)));;关闭org-mode的行号
 
 ;;常用 C-a C-e C-d C-w 光标至 头 尾 向前删除 向后删除, 后面设置了更高效的C-w
 ;; (global-set-key (kbd "C-w") 'backward-kill-word)

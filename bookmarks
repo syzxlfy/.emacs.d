@@ -4,7 +4,7 @@
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored"
  (filename . "~/Lfy_Study/org/gtd.org")
- (front-context-string . "** TODO [#B] sfd")
- (rear-context-string . "9-23 周日 10:30>\n\n")
- (position . 17938))
+ (front-context-string . "** TODO [#B] 中秋朋")
+ (rear-context-string . "8]\n* Workspace\n\n")
+ (position . 18157))
 )
