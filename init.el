@@ -1,7 +1,7 @@
 ;;
 ;;2018-9-15
 ;;子龙山人 21天学会Emacs 视频
-;;学习跟随文件 init.el
+;;学习跟随文件 init.el,有一些配置是自己加上的。
 ;;
 
 ;; Added by Package.el.  This must come before configurations of
@@ -13,8 +13,11 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+  (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+                           ("melpa" . "http://elpa.emacs-china.org/melpa/")))
+  ;; (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   )
+;; cl - Common Lisp Extension
 (require 'cl)
 ;;add whatever packages you want here
 (defvar lfy/packages '(
@@ -23,7 +26,7 @@
 		       hungry-delete   ;;饥饿删除包
 		       smex            ;;按 M-x 后 显示提示
 		       swiper          ;;按 C-s 后(搜索) 下面单独开个窗口给提示
-		       ;;counsel         ;;???
+		       counsel         ;;???
 		       smartparens     ;;智能成对匹配“” () [] {}
 		       js2-mode
 		       nodejs-repl
@@ -39,6 +42,7 @@
 		       magit
 		       window-numbering	;窗口间切换 M-0 1 2 ...
 		       editorconfig     ;;格式化输入
+		       ivy
 
 		       ) "default packages")
 
@@ -80,8 +84,6 @@
 (setq default-tab-width 4)
 (setq tab-width 4)
 
-;;开启行号
-;; (global-linum-mode t)
 (setq linum-format " %d ")
 ;; (add-hook 'org-mode-hook (lambda () (linum-mode 0)));;关闭org-mode的行号
 
@@ -91,7 +93,6 @@
 ;;逗号后自动加空格
 (global-set-key (kbd ",")
                 #'(lambda ()
-                    (interactive)
                     (insert ", ")))
 
 ;;;; 快速打开配置文件
@@ -109,7 +110,7 @@
 ;;禁止备份文件
 (setq make-backup-files nil)
 
-;; 3.Enable recentf-mode
+;; 3.Enable recentf-mode, 保留最近打开的文件列表，以便快速打开。
 (require 'recentf)
 (recentf-mode t)
 (setq recentf-max-menu-items 25)
@@ -138,7 +139,7 @@
 (require 'hungry-delete)
 (global-hungry-delete-mode)
 
-;;Config for smex
+;;Config for smex，为 M-x 命令添加提示
 (require 'smex) ; Not needed if you use package.el
 (smex-initialize) ; Can be omitted. This might cause a (minimal) delay
 					; when Smex is auto-initialized on its first run.
@@ -185,8 +186,12 @@
 (global-set-key (kbd "C-h C-k") 'find-function-on-key)
 
 ;;when require ,wh(setq company-minimum prefix-length 1) not require
+;; popwin 插件可以自动将光标移动到新创建的窗口中。
 (require 'popwin)
 (popwin-mode t)
+
+;;确认某个命令时需要输入 (yes or no) 比较麻烦，设置一个别名将其简化为只输入 (y or n) 。
+(fset 'yes-or-no-p 'y-or-n-p)
 
 ;;设置ORG-Mode 下自动换行，其它模式也可以
 (global-visual-line-mode 1)
@@ -465,7 +470,6 @@
 ;; 3、设置透明效果
 ;; 我觉得这个很有用，特别是需要一边写代码一边看参照其他文档时。按F12键可以一键切换透明度，非常方便
 ;;set transparent effect
-(global-set-key [(f12)] 'loop-alpha)
 (setq alpha-list '((100 100) (95 65) (85 55) (75 45) (65 35)))
 (defun loop-alpha ()
   (interactive)
@@ -477,6 +481,8 @@
     (setq alpha-list (cdr (append alpha-list (list h))))
     )
   )
+(global-set-key [(f12)] 'loop-alpha)
+
 ;; 将子窗口自动编号,然后按 M-0…9跳转(最爱),  安装window-numbering.el,然后在.emacs中添加以下代码.
 ;; 在emacs的默认设置中，需要使用C-x, o来进行窗口切换，颇为不便，特别是窗口数量比较大的时候。通过以下设置，可以
 ;; 使用M-1/M-2/M-3/.../M-9来快速切换到第1/2/3/.../9窗口（窗口上有编号）。
@@ -513,8 +519,6 @@
 ;;让 Emacs 可以直接打开和显示图片。
 (setq auto-image-file-mode t)
 
-
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -530,3 +534,26 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Microsoft YaHei Mono" :foundry "outline" :slant normal :weight normal :height 120 :width normal)))))
+
+;; ;; 此配置文件中设置的所有快捷键列表
+;; (global-set-key (kbd "<f5>") 'open-my-init-file)
+;; (global-set-key "\C-x\ \C-r" 'recentf-open-files)
+;; (global-set-key (kbd "M-x") 'smex)
+;; (global-set-key "\C-s" 'swiper)
+;; (global-set-key (kbd "C-c C-r") 'ivy-resume)
+;; (global-set-key (kbd "C-h C-f") 'find-function)
+;; (global-set-key (kbd "C-h C-v") 'find-variable)
+;; (global-set-key (kbd "C-h C-k") 'find-function-on-key)
+;; (global-set-key (kbd "C-c a") 'org-agenda)
+;; (global-set-key (kbd "C-c r") 'org-capture)
+;; (global-set-key (kbd "C-c t i") 'my-toggle-web-indent)
+;; (global-set-key (kbd "M-s o") 'occur-dwim)
+;; (global-set-key (kbd "M-s i") 'counsel-imenu)
+;; (global-set-key (kbd "C-=") 'er/expand-region)
+;; (global-set-key (kbd "M-s e") 'iedit-mode)
+;; (global-set-key (kbd "C-c p s") 'helm-do-ag-project-root)
+;; (global-set-key (kbd "<f7>") 'helm-do-ag-project-root)
+;; (global-set-key (kbd "C-x g") 'magit-status)
+;; (global-set-key "\M-;" 'qiang-comment-dwim-line)
+;; (global-set-key [(f12)] 'loop-alpha)
+;; (global-set-key (kbd "<f6>") 'editorconfig-format-buffer)
