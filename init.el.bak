@@ -33,15 +33,13 @@
 		       web-mode        ;; web-mode 则是一个非常常用很强大的用于编辑前端代码的 Major Mode,使用 M-;
 		                        ;;就可以注释当前行代码或选中行的代码。
 		       expand-region   ;; 扩展选中区域
-
-		       iedit
+                       iedit
 		       org-pomodoro    ;;Org-pomodoro 是一个番茄时间工作法的插件。
 		       helm-ag
 		       helm-swoop
 		       magit
-		       mwe-log-commands
+		      ) "default packages")
 
-		       ) "default packages")
 (setq package-selected-packages lfy/packages)
 
 (defun lfy/packages-installed-p()
@@ -211,10 +209,12 @@
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/Lfy_Study/org/gtd.org" "工作安排")
 	 "* TODO [#B] %?\n  %i\n"
-
 	 :empty-lines 1)))
+
 ;;绑定一个快捷键，r aka Remember
 (global-set-key (kbd "C-c r") 'org-capture)
+
+
 ;;Org-pomodoro 是一个番茄时间工作法的插件（更多关于这个工作法的信息可以在这里找到）。 它的 GitHub 地址在这里。在 (require 'org-pomodoro) 后可以通过 ;;Customize-group 来对其进行设置，包括不同休息种类的时长。
 (require 'org-pomodoro)
 (setq pomodoro-break-time 2)
@@ -223,8 +223,6 @@
 (setq-default mode-line-format
               (cons '(pomodoro-mode-line-string pomodoro-mode-line-string)
                     mode-line-format))
-;;(pomodoro-add-to-mode-line)
-
 
 
 ;;Emacs 自带的 HTML Mode 使用起来并不是那么的方便，而 web-mode 则是一个非常常用也 很强大的用于编辑前端代码的 Major ;;Mode（你可以在这里找到更多关于它的信息）。首先我们需要安装它，照例我们需要将其添加至我们的插件列表中去。(Web-mode)前面已安装
@@ -342,8 +340,6 @@
 					    ("syzx-" " @163.com")
 					   ))
 
-
-
 ;;ag它是非常快速的命令 行搜索工具，它是 Linux 的所有搜索工具中最快的。使用 ag 前我们需要进行安装，
 ;;# Windows 下通过 msys2 安装（确保在 path 中）
 ;;pacman -S mingw-w64-i686-ag # 32 位电脑
@@ -352,7 +348,6 @@
 ;;下面配置未成功
 (require 'helm-ag)
 (global-set-key (kbd "C-c p s") 'helm-do-ag-project-root)
-
 
 ;;(require 'org-octopress)
 ;;(setq org-octopress-directory-top       "~/Lfy_Study/octopress/source")
@@ -363,10 +358,6 @@
 
 ;;查看git状态，在init.el中添加快捷键绑定
 (global-set-key (kbd "C-x g") 'magit-status)
-
-
-
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
