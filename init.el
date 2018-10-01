@@ -1,6 +1,6 @@
 ;;--------------------------------------------------------------------------------------------
 ;; 文件名：.Spacemacs
-;; Time-stamp: <此文件由 syzxg修改 最后修改时间为：2018年10月01日 23时08分34秒>
+;; Time-stamp: <此文件由 syzxg 修改--最后修改时间为：2018年10月02日 05时51分40秒>
 ;;--------------------------------------------------------------------------------------------
 ;; 此文件始于2018-9-15
 ;; 子龙山人 21天学会Emacs 视频
@@ -68,17 +68,20 @@
 ;;以下为界面设置(放置自己喜欢的配置)--开始
 (tool-bar-mode t)                   ;;工具栏显示(t 或 nil)
 (menu-bar-mode t)                   ;;菜单栏显示
-(electric-indent-mode t)            ;;自动缩进
-(setq inhibit-splash-screen t)      ;;抑制启动显示屏幕
-(scroll-bar-mode -1)                ;;侧边栏禁用
 (setq auto-save-default nil)        ;;禁用自动保存
+(tool-bar-mode t)                           ;;工具栏显示(t 或 nil)
+(menu-bar-mode t)                           ;;菜单栏显示
+(electric-indent-mode t)                    ;;自动缩进
+(setq inhibit-splash-screen t)              ;;抑制启动显示屏幕
+(scroll-bar-mode -1)                        ;;侧边栏禁用
+(setq-default auto-save-default nil)        ;;禁用自动保存(全局型)
 ;; 启用时间显示设置，在minibuffer上面的那个杠上
 (display-time-mode t)
 ;; 使用24小时制
 (setq display-time-24hr-format t)
 ;;显示行号与列号
-(global-linum-mode 1) ;; 显示行号
-(column-number-mode 1);; 显示列号
+(global-linum-mode t) ;; 显示行号
+(column-number-mode t);; 显示列号
 ;;自定义buffer头
 ;;显示更多的buffer标题信息
 (setq frame-title-format
@@ -157,7 +160,7 @@
 (global-set-key (kbd "M-x") 'smex)
 
  ;;配置swiper,替代isearch,使用ivy来显示所有匹配的目录。
-(ivy-mode 1)
+(ivy-mode t)
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
 (global-set-key "\C-s" 'swiper)
@@ -204,7 +207,7 @@
 (popwin-mode t)
 
 ;;设置ORG-Mode 下自动换行，其它模式也可以
-(global-visual-line-mode 1)
+(global-visual-line-mode t)
 
 
 ;;使ORG文件中的源码能高亮显示。添加 Org-mode 文本内语法高亮
@@ -244,7 +247,7 @@
 (setq org-todo-keywords
       '(
 	;;(type "工作(w!)" "学习(s!)" "休闲(l!)" "|")
-    (sequence "PENDING(p!)" "TODO(t!)"  "|" "DONE(d!)" "ABORT(a@/!)")
+	(sequence "PENDING(p!)" "TODO(t!)"  "|" "DONE(d!)" "ABORT(a@/!)")
     ))
 (setq org-todo-keyword-faces
   '(("工作" .      (:background "red" :foreground "white" :weight bold))
@@ -274,7 +277,10 @@
 ;; 4. TITLE 为标题文本，手工输入你的内容
 
 ;; 5. TAG 为标记设置
-(setq org-tag-alist '(("work" . ?w) ("home" . ?h) ("study" . ?s) ("laptop" . ?l)))
+(setq org-tag-alist '(("work" . ?w)
+		      ("home" . ?h)
+		      ("study" . ?s)
+		      ("laptop" . ?l)))
 
 ;; 此处为提高启动时的运行速度而设置，具体不知是如何实现的(参照子龙山人的设置)
  (setq tramp-ssh-controlmaster-options
