@@ -1,6 +1,6 @@
 ;;--------------------------------------------------------------------------------------------
 ;; 文件名：.Spacemacs
-;; Time-stamp: <此文件由 syzxg 修改--最后修改时间为：2018年10月02日 10时29分32秒>
+;; Time-stamp: <此文件由 syzxg 修改--最后修改时间为：2018年10月03日 00时34分23秒>
 ;;--------------------------------------------------------------------------------------------
 ;; 此文件始于2018-9-15
 ;; 子龙山人 21天学会Emacs 视频
@@ -37,7 +37,7 @@
 		       exec-path-from-shell
 		       popwin          ;;when require ,wh(setq company-minimum prefix-length 1) not require
 		       web-mode        ;; web-mode 则是一个非常常用很强大的用于编辑前端代码的 Major Mode,使用 M-;
-		                        ;;就可以注释当前行代码或选中行的代码。
+		                       ;;就可以注释当前行代码或选中行的代码。
 		       expand-region   ;; 扩展选中区域
 		       iedit
 		       org-pomodoro    ;;Org-pomodoro 是一个番茄时间工作法的插件.
@@ -70,9 +70,9 @@
 (menu-bar-mode t)                           ;;菜单栏显示
 (electric-indent-mode t)                    ;;自动缩进
 (setq inhibit-splash-screen t)              ;;抑制启动显示屏幕
-(scroll-bar-mode nil)                        ;;侧边栏禁用
+(scroll-bar-mode -1)                         ;侧边栏禁用
 (setq-default auto-save-default nil)        ;;禁用自动保存(全局型)
-;; 启用时间显示设置，在minibuffer上面的那个杠上
+;; 启用时间显示设置，在minibuffer的状态条上显示
 (display-time-mode t)
 ;; 使用24小时制
 (setq display-time-24hr-format t)
