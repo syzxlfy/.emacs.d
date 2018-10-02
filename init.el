@@ -66,9 +66,6 @@
 (global-set-key (kbd "<f5>") 'open-my-init-file) ;;这一行代码，将函数 open-init-file 绑定到 <F5> 键上
 ;;
 ;;以下为界面设置(放置自己喜欢的配置)--开始
-(tool-bar-mode t)                   ;;工具栏显示(t 或 nil)
-(menu-bar-mode t)                   ;;菜单栏显示
-(setq auto-save-default nil)        ;;禁用自动保存
 (tool-bar-mode t)                           ;;工具栏显示(t 或 nil)
 (menu-bar-mode t)                           ;;菜单栏显示
 (electric-indent-mode t)                    ;;自动缩进
