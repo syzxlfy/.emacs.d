@@ -1,6 +1,6 @@
 ;;--------------------------------------------------------------------------------------------
 ;; 文件名：.Spacemacs
-;; Time-stamp: <此文件由 syzxg 修改--最后修改时间为：2018年10月03日 00时34分23秒>
+;; Time-stamp: <此文件由 syzxg 修改--最后修改时间为：2018年10月03日 08时27分49秒>
 ;;--------------------------------------------------------------------------------------------
 ;; 此文件始于2018-9-15
 ;; 子龙山人 21天学会Emacs 视频
@@ -44,6 +44,7 @@
                        helm-ag
 		       helm-swoop
 		       magit
+		       youdao-dictionary
 		      ) "default packages")
 (setq package-selected-packages lfy/packages)
 
@@ -581,6 +582,19 @@
 ;;设置magit快捷键
 (global-set-key (kbd "C-x g") 'magit-status)
 
+
+;;友道词典配置
+;; Enable Cache
+(setq url-automatic-caching t)
+;; Example Key binding
+(global-set-key (kbd "C-x y") 'youdao-dictionary-search-at-point)
+;; Integrate with popwin-el (https://github.com/m2ym/popwin-el)
+;; (push "*Youdao Dictionary*" popwin:special-display-config)
+;; Set file path for saving search history
+(setq youdao-dictionary-search-history-file "~/.emacs.d/.youdao")
+;; Enable Chinese word segmentation support (支持中文分词)
+(setq youdao-dictionary-use-chinese-word-segmentation t)
+
 ;;time-stamp在此文件头部设置时间标志，每次文件修改保存时，时间自动更新
 (setq time-stamp-line-limit 10) ; check first 10 buffer lines for Time-stamp: <>
 (add-hook 'write-file-hooks 'time-stamp)
@@ -601,7 +615,8 @@
  ;; If there is more than one, they won't work right.
  '(company-idle-delay 0.08)
  '(company-minimum-prefix-length 1)
- '(org-pomodoro-length 50))
+ '(org-pomodoro-length 50)
+ '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
