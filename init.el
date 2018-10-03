@@ -1,6 +1,6 @@
 ;;--------------------------------------------------------------------------------------------
 ;; 文件名：.Spacemacs
-;; Time-stamp: <此文件由 syzxg 修改--最后修改时间为：2018年10月03日 08时27分49秒>
+;; Time-stamp: <此文件由 syzxg 修改--最后修改时间为：2018年10月03日 10时16分13秒>
 ;;--------------------------------------------------------------------------------------------
 ;; 此文件始于2018-9-15
 ;; 子龙山人 21天学会Emacs 视频
@@ -587,7 +587,7 @@
 ;; Enable Cache
 (setq url-automatic-caching t)
 ;; Example Key binding
-(global-set-key (kbd "C-x y") 'youdao-dictionary-search-at-point)
+(global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point)
 ;; Integrate with popwin-el (https://github.com/m2ym/popwin-el)
 ;; (push "*Youdao Dictionary*" popwin:special-display-config)
 ;; Set file path for saving search history
