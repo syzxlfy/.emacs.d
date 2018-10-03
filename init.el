@@ -1,6 +1,6 @@
 ;;--------------------------------------------------------------------------------------------
 ;; 文件名：.Spacemacs
-;; Time-stamp: <此文件由 syzxg 修改--最后修改时间为：2018年10月03日 10时16分13秒>
+;; Time-stamp: <此文件由 syzxg 修改--最后修改时间为：2018年10月03日 15时37分01秒>
 ;;--------------------------------------------------------------------------------------------
 ;; 此文件始于2018-9-15
 ;; 子龙山人 21天学会Emacs 视频
@@ -44,7 +44,8 @@
                        helm-ag
 		       helm-swoop
 		       magit
-		       youdao-dictionary
+		       youdao-dictionary ;;友道词典
+		       
 		      ) "default packages")
 (setq package-selected-packages lfy/packages)
 
@@ -589,7 +590,7 @@
 ;; Example Key binding
 (global-set-key (kbd "C-c y") 'youdao-dictionary-search-at-point)
 ;; Integrate with popwin-el (https://github.com/m2ym/popwin-el)
-;; (push "*Youdao Dictionary*" popwin:special-display-config)
+;;(push "*Youdao Dictionary*" popwin:special-display-config)
 ;; Set file path for saving search history
 (setq youdao-dictionary-search-history-file "~/.emacs.d/.youdao")
 ;; Enable Chinese word segmentation support (支持中文分词)
