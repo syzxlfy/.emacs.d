@@ -1,6 +1,6 @@
 ;;--------------------------------------------------------------------------------------------
 ;; 文件名：.Spacemacs
-;; Time-stamp: <此文件由 syzxg 修改--最后修改时间为：2018年10月03日 15时37分01秒>
+;; Time-stamp: <此文件由 syzxg 修改--最后修改时间为：2018年10月09日 15时03分57秒>
 ;;--------------------------------------------------------------------------------------------
 ;; 此文件始于2018-9-15
 ;; 子龙山人 21天学会Emacs 视频
@@ -45,7 +45,7 @@
 		       helm-swoop
 		       magit
 		       youdao-dictionary ;;友道词典
-		       
+
 		      ) "default packages")
 (setq package-selected-packages lfy/packages)
 
@@ -345,7 +345,7 @@
            ((stuck "") ;; review stuck projects as designated by org-stuck-projects
             (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
             ))))
-
+;; 自定义agenda-view
 (defun air-org-skip-subtree-if-priority (priority)
      "Skip an agenda subtree if it has a priority of PRIORITY.
    PRIORITY may be one of the characters ?A, ?B, or ?C."
